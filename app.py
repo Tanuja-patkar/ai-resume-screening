@@ -1,8 +1,13 @@
 import streamlit as st
 import spacy
+import os
 import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
+# Download SpaCy model if not already installed
+if not spacy.util.is_package("en_core_web_sm"):
+    os.system("python -m spacy download en_core_web_sm")
 
 # Load NLP Model
 nlp = spacy.load("en_core_web_sm")
@@ -22,9 +27,9 @@ def compute_similarity(resume_text, job_description):
     return similarity_score
 
 # Streamlit UI
-st.title("📝 AI Resume Screening System")
+st.title("📄 AI Resume Screening System")
 
-st.header("📌 Enter Job Description")
+st.header("🔹 Enter Job Description")
 job_description = st.text_area("Paste Job Description here")
 
 st.header("📤 Upload Resumes")
@@ -41,9 +46,9 @@ if st.button("🔍 Analyze Resumes"):
         # Sort by highest match
         results.sort(key=lambda x: x[1], reverse=True)
 
-        st.subheader("✅ Top Matching Resumes")
+        st.subheader("🏆 Top Matching Resumes")
         for name, score in results:
-            st.write(f"**📄 {name}:** {score:.2f} similarity")
+            st.write(f"**📌 {name}:** {score:.2f} similarity")
 
     else:
         st.warning("⚠️ Please upload resumes and provide a job description.")
