@@ -1,0 +1,23 @@
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+
+# Sample data
+resume_samples = [
+    "Software engineer with experience in Python and ML.",
+    "Marketing specialist with SEO expertise.",
+    "Data scientist with strong AI background."
+]
+labels = [1, 0, 1]  # Example labels
+
+# Train TF-IDF model
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(resume_samples)
+
+# Train a simple classifier
+model = LogisticRegression()
+model.fit(X, labels)
+
+# Save the vectorizer and model
+with open("resume_model.pkl", "wb") as model_file:
+    pickle.dump((vectorizer, model), model_file)
