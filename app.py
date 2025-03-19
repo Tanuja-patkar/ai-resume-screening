@@ -5,12 +5,13 @@ import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Download SpaCy model if not already installed
-if not spacy.util.is_package("en_core_web_sm"):
-    os.system("python -m spacy download en_core_web_sm")
+# ✅ Ensure SpaCy model is downloaded in the Streamlit Cloud environment
+spacy_model = "en_core_web_sm"
+if not spacy.util.is_package(spacy_model):
+    os.system(f"python -m spacy download {spacy_model}")
 
 # Load NLP Model
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load(spacy_model)
 
 # Preprocessing function
 def preprocess_text(text):
